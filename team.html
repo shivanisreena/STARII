@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STARI – Team</title>
+<link rel="stylesheet" href="CSS/main.css">
+  <style>
+    :root{
+      --bg-0:#05070f; --bg-1:#0a0f1e; --bg-2:#0e1530;
+      --card:#0b1023; --card-2:#0f1733;
+      --text:#f3f6ff; --muted:#a9b7d9;
+      --brand:#22d3ee; --brand-2:#A7C7FF;
+      --ring:#7c3aed; --radius:18px; --container:1220px;
+      --shadow:0 8px 30px rgba(0,0,0,.45);
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+    html,body{height:100%}
+
+    body{
+      font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      color:var(--text);
+      background:#000 url("images/Starfield.png") 50% 0 / 800px 800px repeat fixed;
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    .container{
+      max-width:var(--container);
+      margin:0 auto;
+      padding:0 1.2rem;
+    }
+
+    /* HEADER / NAV */
+    header{
+      position:fixed;
+      inset:0 0 auto 0;
+      height:68px;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(5,7,15,.85),rgba(5,7,15,.25));
+      border-bottom:1px solid rgba(139,92,246,.25);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+    }
+
+    .logo{font-weight:800;letter-spacing:.06em}
+
+    .links{
+      display:flex;
+      gap:.6rem;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:.55rem .9rem;
+      border-radius:12px;
+      border:1px solid rgba(139,92,246,.35);
+      background:rgba(15,23,42,.8);
+      font-size:.9rem;
+      font-weight:600;
+      color:var(--text);
+      white-space:nowrap;
+    }
+
+    .btn.primary{
+      background:linear-gradient(180deg,#0b0b18,#020617);
+      border-color:#4c1d95;
+    }
+
+    .btn.ghost{
+      background:transparent;
+    }
+
+    .btn:hover{
+      filter:brightness(1.08);
+    }
+
+    /* simple mobile nav stacking */
+    @media (max-width: 720px){
+      header{height:auto;padding:.4rem 0;}
+      .nav{flex-direction:column;align-items:flex-start;}
+      .links{justify-content:flex-start;}
+    }
+
+    /* GENERIC SECTIONS */
+    main{padding-top:76px;} /* below fixed header */
+
+    section{padding:3.5rem 0;}
+
+    .section-title{
+      font-size:1.8rem;
+      margin-bottom:1.2rem;
+    }
+
+    /* HERO */
+    .hero{
+      padding-top:1rem;
+      padding-bottom:2rem;
+    }
+
+    .hero-inner{
+      max-width:900px;
+      margin:0 auto;
+      text-align:center;
+    }
+
+    .hero-title{
+      font-size:clamp(2.2rem,4vw,3rem);
+      margin-bottom:.5rem;
+    }
+
+    .hero-sub{
+      font-size:1rem;
+      color:var(--muted);
+    }
+
+    /* TEAM GRID */
+    .team-section{
+      padding-top:1rem;
+      padding-bottom:4rem;
+    }
+
+    .team-grid{
+      display:grid;
+      gap:1.2rem;
+    }
+
+    /* 2 columns on medium screens */
+    @media (min-width:700px){
+      .team-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    /* 4 columns on large screens */
+    @media (min-width:1100px){
+      .team-grid{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+      }
+    }
+
+    .team-card{
+      background:linear-gradient(180deg,var(--card),var(--card-2));
+      border-radius:var(--radius);
+      border:1px solid rgba(139,92,246,.18);
+      box-shadow:var(--shadow);
+      padding:1rem .9rem 1.2rem;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    /* frame keeps all portraits same shape, no cropping */
+    .team-photo-frame{
+      width:100%;
+      max-width:230px;
+      aspect-ratio:3 / 4;
+      border-radius:22px;
+      padding:4px;
+      background:rgba(15,23,42,.9);
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 1rem;
+    }
+
+    .team-photo{
+      width:100%;
+      height:100%;
+      object-fit:contain;     /* ⭐ show full image, no cutting */
+      border-radius:18px;
+      display:block;
+    }
+
+    .team-name{
+      margin:.3rem 0 .15rem;
+      font-size:1.05rem;
+      font-weight:700;
+    }
+
+    .team-role{
+      margin:0;
+      font-size:.95rem;
+      color:var(--muted);
+    }
+
+    .team-affil{
+      margin:.3rem 0 0;
+      font-size:.9rem;
+      color:var(--brand-2);
+    }
+
+    footer{
+      padding:.75rem 0;
+      color:#9ab0e2;
+      border-top:1px solid rgba(139,92,246,.2);
+      font-size:.85rem;
+    }
+
+    footer .container{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="logo">
+      <a href="index.html"><strong>STARI</strong></a>
+    </div>
+    <nav class="links">
+      <a class="btn ghost" href="index.html#missions">Mission</a>
+      <a class="btn ghost" href="index.html#culture">Publications</a>
+      <a class="btn ghost" href="index.html#membership">News</a>
+      <a class="btn ghost" href="team.html">Team</a>
+      <a class="btn primary" href="index.html#news">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section  >
+    <div class="container " style="text-align:center">
+      <h1 class="hero-title">STARI Mission Team</h1>
+      <p class="hero-sub">
+        Scientists, engineers, and students collaborating to demonstrate
+        space-based optical interferometry with twin CubeSats.
+      </p>
+    </div>
+  </section>
+ 
+
+ <!-- Support -->
+  <section id="support" class="parallax-section" style="background:linear-gradient(180deg,var(--bg-1),var(--bg-2))">
+    <div class="parallax-bg" aria-hidden="true"><div class="glow" data-depth="-0.2"></div></div>
+    <div class="container">
+      <h2 class="section-title">Team</h2>
+      <div class="grid">
+       
+<div class="grid grid-3 team-logos">
+<article class="card team-logo">
+    <img src="images/Monnier.jpg" alt="Monnier">
+ <h3 class="team-name">Dr. John D. Monnier</h3>
+          <p class="team-role">Principal Investigator & Project Manager</p>
+          <p class="team-affil">University of Michigan</p>
+
+  </article>
+
+ <article class="card team-logo">
+    <img src="images/Cutler.jpg" alt="James Cutler">
+ <h3 class="team-name">Dr. James Cutler</h3>
+          <p class="team-role">Co-Investigator & Project System Engineer</p>
+          <p class="team-affil">University of Michigan</p>
+
+  </article>
+  <article class="card team-logo">
+    <img src="images/Meyer.jpg" alt="Michael Meyer">
+ <h3 class="team-name">Dr. Michael Meyer</h3>
+          <p class="team-role">Co-Investigator</p>
+          <p class="team-affil">University of Michigan</p>
+
+  </article>
+ <article class="card team-logo">
+    <img src="images/Lightsey.jpg" alt="Glenn Lightsey">
+ <h3 class="team-name">Dr. Glenn Lightsey</h3>
+          <p class="team-role">Co-Investigator</p>
+          <p class="team-affil">Georgia Institute of Technology</p>
+
+
+  </article>
+  <article class="card team-logo">
+    <img src="images/gautam.jpg" alt="Dr. Gautam Vasisht">
+ <h3 class="team-name">Dr. Gautam Vasisht</h3>
+          <p class="team-role">Co-Investigator</p>
+          <p class="team-affil">Jet Propelsion Laboratory</p>
+
+  </article>
+   <article class="card team-logo">
+    <img src="images/leonid.jpg" alt="Dr. Leonid Pogorelyuk">
+<h3 class="team-name">Dr. Leonid Pogorelyuk</h3>
+          <p class="team-role">Co-Investigator</p>
+          <p class="team-affil">Rensselaer Polytechnic Institute</p>
+
+  </article>
+
+  <article class="card team-logo">
+    <img src="images/Amico.jpg" alt="Dr. Simone D'Amico">
+<h3 class="team-name">Dr. Simone D'Amico</h3>
+          <p class="team-role">Co-Investigator</p>
+          <p class="team-affil">Stanford University</p>
+  </article>
+
+  <article class="card team-logo">
+    <img src="images/kerri.jpeg" alt="Dr. Kerri Cahoy">
+<h3 class="team-name">Dr. Kerri Cahoy</h3>
+          <p class="team-role">Collaborator</p>
+          <p class="team-affil">Massachusetts Institute of Technology</p>
+  </article>
+
+
+
+
+</div>   
+ </div>
+    </div>
+
+  </section>
+
+
+      
+</main>
+
+<footer>
+  <div class="container">
+    <small>© <span id="y"></span> STARI</small>
+    <small>Funded by NASA APRA</small>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
