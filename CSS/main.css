@@ -1,1 +1,635 @@
+ :root{
+      --bg-0:#05070f; --bg-1:#0a0f1e; --bg-2:#0e1530;
+      --card:#0b1023; --card-2:#0f1733;
+      --text:#f3f6ff; --muted:#a9b7d9;
+       --brand:  #22d3ee;  /* main accent (same as your accent) */
+  --brand-2:#A7C7FF;  /* lighter cyan for text */
+      --ring:#7c3aed; --radius:18px; --container:1220px;
+      --shadow:0 8px 30px rgba(0,0,0,.45);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html, body {
+  height: 100%;
+}
 
+body{
+  margin:0;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  color:var(--text);
+
+  /* ⭐ global starfield background */
+  background:
+    #000
+    url('../images/Starfield.png') 50% 0 / 800px 800px repeat fixed;
+    /* repeat = tiled, fixed = subtle parallax */
+
+  overflow-x:hidden;
+}
+
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%;border-radius:12px}
+    .container{max-width:var(--container);margin:0 auto;padding:0 1.2rem}
+
+    /* Header */
+    header{position:fixed;inset:0 0 auto 0;height:68px;z-index:70;display:flex;align-items:center;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(5,7,15,.72),rgba(5,7,15,.15));border-bottom:1px solid rgba(139,92,246,.18)}
+    .nav{display:flex;align-items:center;justify-content:space-between}
+    .links{display:flex;gap:1rem;align-items:center}
+    .logo{display:flex;align-items:center;gap:.6rem}
+    .logo-badge{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--brand-2),var(--brand));box-shadow:0 0 0 3px rgba(139,92,246,.2)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1rem;border-radius:12px;border:1px solid rgba(139,92,246,.25);background:rgba(15,23,42,.55);color:var(--text);font-weight:650}
+    .btn.primary{background:linear-gradient(180deg,#0b0b18,#0b0b18);border-color:#4c1d95}
+    .btn.ghost{background:transparent}
+    .btn:hover{filter:brightness(1.07)}
+
+    /* HERO PARALLAX STAGE */
+.stage{
+  position: relative;
+  height: 92svh;
+  perspective: 1200px;
+  overflow: visible;
+  z-index: 10;          /* NEW */
+}
+
+
+  /* hero layers: extend above and sideways, but NOT below */
+.layer{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  will-change:transform;
+}
+/* star textures: same idea */
+.stars,
+.stars-2,
+.stars-3{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  background-size:600px 600px;
+  background-repeat:repeat;
+}
+    
+.nebula {
+  position:absolute;
+  inset:-10% -10% -10% -10%;                 /* bleed outside in all directions */
+  background:url('../images/headerbg_earth.jpg')
+             center bottom / cover no-repeat;/* fill & stick horizon to bottom */
+  filter:brightness(1.08) saturate(1.15);
+  opacity:.9;
+}
+
+    /* HERO COPY */
+    .hero{position:relative;z-index:10;padding-top:calc(68px + 6vh)}
+.hero-img {
+  object-position: top center;  /* <– focus on stars */
+ 
+}
+    .hero-inner{display:grid;gap:1rem;padding:18vh 0 10vh;max-width:900px}
+    .eyebrow{color:var(--brand-2);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    E{margin:.2rem 0;font-size:clamp(1rem,3.2vw,3.6rem);line-height:1.05}
+    .sub{color:var(--muted)}
+    .pill{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem .9rem;border-radius:999px;border:1px solid rgba(167,139,250,.3);background:rgba(124,58,237,.08);color:var(--brand-2);font-weight:700}
+    .cta{display:flex;gap:.7rem;flex-wrap:wrap}
+
+    /* Sections */
+    section{position:relative;padding:5rem 0}
+    .section-title{margin:0 0 1.2rem;font-size:1.7rem}
+    .grid{display:grid;gap:1.2rem}
+    @media (min-width: 900px){.grid-2{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-4{grid-template-columns:repeat(4,1fr)}.grid-6{grid-template-columns:repeat(6,1fr)}.grid-7{grid-template-columns:repeat(7,1fr)}
+}
+
+    .card{background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid rgba(139,92,246,.18);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow)}
+    .card .meta{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:.9rem}
+    .card h3{margin:.6rem 0 .4rem;font-size:1.1rem}
+    .card p{margin:0;color:var(--muted)}
+  
+    .card img{aspect-ratio:16/9;object-fit:cover;width:100%}
+
+    /* Parallax background inside sections */
+.parallax-section,
+#culture,
+#support,
+#news {
+  background: transparent !important;
+}
+    .parallax-section{overflow:hidden}
+    .parallax-bg{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  pointer-events:none;
+  z-index:0;
+}
+    .parallax-bg .dots{position:absolute;inset:0;background:radial-gradient(1px 1px at 10% 20%,#fff6,transparent 25%),radial-gradient(1px 1px at 70% 40%,#9ec5ff88,transparent 25%),radial-gradient(1px 1px at 40% 80%,#bfa3ff77,transparent 25%);opacity:.15}
+   .parallax-bg .glow{
+  position:absolute;
+  left:60%;
+  top:-10%;
+  width:60vw;
+  height:60vw;
+  background:none;      /* no purple gradient */
+  filter:none;
+  display:none;         /* completely hidden */
+}
+
+    .parallax-bg [data-depth]{position:absolute;inset:0;will-change:transform}
+
+    footer{padding:3rem 0;color:#9ab0e2;border-top:1px solid rgba(139,92,246,.18)}
+    :focus-visible{outline:3px solid var(--ring);outline-offset:2px}
+
+    @media (prefers-reduced-motion: reduce){
+      .layer,[data-depth]{transform:none!important}
+      .stage{perspective:none}
+    }
+#support .logo-grid img,
+#support .grid img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  max-height: clamp(100px, 18vw, 200px); /* larger base and scales smoothly */
+}
+
+/* Slightly smaller on small screens */
+@media (max-width: 768px) {
+  #support .logo-grid img {
+    max-height: clamp(80px, 20vw, 150px);
+  }
+}
+
+@media (max-width: 420px) {
+  #support .logo-grid img {
+    max-height: 120px;
+  }
+}
+/* Contact form */
+.contact-card form {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.field-group label {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.field-group input,
+.field-group textarea,
+.field-group select {
+  border-radius: 10px;
+  border: 1px solid rgba(139,92,246,.35);
+  background: rgba(15,23,42,.8);
+  padding: 0.6rem 0.75rem;
+  color: var(--text);
+  font: inherit;
+}
+
+.field-inline {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 700px) {
+  .field-inline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.field-group textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.contact-meta {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+/* News slider */
+.news-slider-wrapper {
+  margin-top: 1.5rem;
+}
+
+.news-slider {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 0.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.news-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.news-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+}
+
+@media (min-width: 800px) {
+  .news-slide {
+    flex: 0 0 60%;
+  }
+}
+
+.news-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.news-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(148,163,184,.7);
+  cursor: pointer;
+}
+
+.news-dot.active {
+  width: 18px;
+  background: rgba(129,140,248,1);
+}
+.news-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+/* 2 cards visible on small tablets */
+@media (min-width: 640px) {
+  .news-slide {
+    flex: 0 0 50%;
+  }
+}
+
+/* 3 cards visible on desktop */
+@media (min-width: 1024px) {
+  .news-slide {
+    flex: 0 0 calc(33.333% - 1rem);
+  }
+}
+/* Override card image style just for team logos */
+.team-logos .card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  overflow: hidden;  
+}
+
+.team-logos .card img {
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
+  max-height: 120px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 18px;
+}
+/* Slightly enlarge NASA so it visually matches the others */
+.team-logo-nasa img {
+  transform: scale(1.15);
+}
+/* Satellite over hero background */
+
+
+
+@keyframes sat-float {
+  from { transform: translate3d(0, 10px, 40px); }
+  to   { transform: translate3d(0, -14px, 40px); }
+}
+
+@keyframes sat-tilt {
+  from { transform: rotateZ(-4deg); }
+  to   { transform: rotateZ(4deg); }
+}
+
+/* Satellite over hero background */
+/* Satellite over hero background, still parallaxed as a layer */
+
+/* Satellites: high z-index so they pass OVER sections */
+.sat{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 50;          /* was 20 – bump way up */
+}
+
+
+.sat-orbit {
+  transform-origin: 50% 50%;
+  --orbit-shift: 8vw;   /* adjust this until it looks centered */
+  margin-left: var(--orbit-shift);
+ translateY(10vh)   /* move the pair down over the Earth */
+    translateX(-4vw)   /* nudge slightly left/right */
+    rotate(-26deg);    /* angle so sats are left & right on a line */
+}
+
+.sat-img {
+  width: min(1400px, 120vw);  /* was min(1300px, 100vw) */
+  height: auto;
+  filter: drop-shadow(0 18px 40px rgba(0,0,0,.7));
+} 	
+
+
+.stars,
+.stars-2,
+.stars-3 {
+  opacity: 0.0;  /* or 0.1 if you want just a tiny boost */
+}
+
+/* Center hero text between the two satellites */
+.hero {
+  position: relative;
+  z-index: 30; /* above satellites */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 92vh; /* match hero stage height */
+  pointer-events: none; /* satellites still clickable if needed */
+}
+
+.hero-inner {
+  text-align: center;
+  margin-top:15%;   /* shift upward into the satellite gap */
+  pointer-events: auto; /* text clickable */
+}
+
+/* Reposition hero text nicely above the satellites */
+.hero {
+  position: relative;
+  z-index: 30;
+  height: 92vh;     /* same as .stage */
+  padding: 0;
+}
+
+/* === HERO OVERRIDES === */
+
+.hero {
+  position: relative;
+  z-index: 20;
+  height: 92vh;        /* match .stage */
+  padding: 0;          /* we’ll control position via top on .hero-inner */
+}
+
+/* position the text block */
+.hero-inner {
+  position: absolute;
+  top: 18vh;           /* move up/down: smaller = higher, larger = lower */
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 900px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* If you still have margin-top or ::before from earlier, this neutralizes it */
+.hero-inner::before {
+  content: none !important;
+}
+.hero-title {
+  /* allow wrapping */
+  white-space: normal;
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  line-height: 1.1;
+  margin: 0;
+}
+
+
+.hero-title span {
+  color: var(--brand-2);
+}
+/* Remove big gap before/after footer */
+#news {
+  padding-bottom: 1.5rem;   /* was 5rem from `section` */
+}
+
+footer{
+  padding:0.75rem 0 0.25rem;   /* much tighter top & bottom */
+  color:#9ab0e2;
+  border-top:1px solid rgba(139,92,246,.18);
+}
+
+
+/* Make sure there's no random extra margin at the bottom */
+/* Make footer stick to bottom of the screen */
+footer {
+  position: static;              /* ⬅ undo fixed footer */
+  padding: 0.5rem 0 0.5rem;
+  margin: 0;
+  color: #9ab0e2;
+  border-top: 1px solid rgba(139,92,246,.18);
+}
+
+/* Tight bottom space for the last section */
+#news {
+  padding-bottom: 0.5rem !important;
+}
+
+/* Hero stage: base layer */
+.stage{
+  position: relative;
+  height: 92svh;
+  perspective: 1200px;
+  overflow: visible;
+  z-index: 0;              /* base */
+}
+
+/* Satellites: above nebula, but BELOW sections */
+.sat{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;              /* low value */
+}
+
+/* Hero text: stays above satellites in hero */
+.hero{
+  position: relative;
+  z-index: 5;
+}
+/* Normal sections stay below the satellite */
+section,
+.parallax-section,
+#missions,
+#culture,
+#membership,
+#support,
+#news{
+  position: relative;
+  z-index: 10;             /* higher than .sat */
+}
+/* Make cards vertical flex boxes */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Push the Explore button row to the bottom */
+.card .actions {
+  margin-top: auto;       /* uses all remaining space above */
+  padding-top: 1rem;      /* small gap above the button */
+  display: flex;
+  gap: .6rem;
+}
+.news-slider-wrapper {
+  margin-top: 1.5rem;
+  position: relative;        /* so arrows can be positioned inside */
+}
+
+.news-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid rgba(148,163,184,.7);
+  background: rgba(15,23,42,.9);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.news-arrow-left {
+  left: -0.5rem;
+}
+
+.news-arrow-right {
+  right: -0.5rem;
+}
+
+.news-arrow:hover {
+  filter: brightness(1.15);
+}
+
+/* On small screens, tuck them in a bit */
+@media (max-width: 640px) {
+  .news-arrow-left { left: 0.25rem; }
+  .news-arrow-right { right: 0.25rem; }
+}
+/* Tablet and below: wrap menu, shrink buttons */
+@media (max-width: 900px) {
+  header {
+    height: auto;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding-block: 0.35rem;
+  }
+
+  .logo {
+    margin-right: 0.5rem;
+  }
+
+  .links {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .btn {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.8rem;
+  }
+
+  .hero-inner {
+    top: 22vh;              /* move a bit lower for small screens */
+    padding: 0 0.5rem;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 520px) {
+  .links {
+    width: 100%;
+    justify-content: center;
+    gap: 0.3rem 0.4rem;
+  }
+
+  .btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+}
+
+/*Team page */
+.team-card {
+  background: linear-gradient(180deg,var(--card),var(--card-2));
+  border-radius: var(--radius);
+  border: 1px solid rgba(139,92,246,.18);
+  box-shadow: var(--shadow);
+  padding: 0.9rem;      /* smaller inner padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.team-photo {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: 18px;
+  margin-bottom: 1rem;
+}
+
+.team-name {
+  margin: 0.4rem 0 0.2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.team-role {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.team-affil {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: var(--brand-2);
+}
+
+/* reduce left/right padding for this section only */
+#team .container {
+  padding: 0 0.5rem;
+}
